@@ -1,0 +1,29 @@
+@startuml 04-element-rendering
+!include <archimate/Archimate>
+title Representación de elementos (ArchiMate) — funciones de render por tipo
+
+Application_Component(view, "BoardView")
+Application_Function(render, "render(snapshot)")
+Application_Function(fRect, "renderRectangle\n<g><rect/><text/></g>")
+Application_Function(fText, "renderText\n<g><rect hitbox/><text/></g>")
+Application_Function(fConn, "renderConnector\n<line marker-end/>\nextremos derivados de source/target")
+
+Application_DataObject(element, "BoardElement")
+Application_DataObject(rect, "RECTANGLE\nx, y, width, height, text")
+Application_DataObject(text, "TEXT\nx, y, text")
+Application_DataObject(conn, "CONNECTOR\nsourceId, targetId")
+Application_Interface(svg, "<svg id=boardCanvas>")
+
+Rel_Assignment(view, render)
+Rel_Composition(render, fRect)
+Rel_Composition(render, fText)
+Rel_Composition(render, fConn)
+Rel_Specialization(rect, element)
+Rel_Specialization(text, element)
+Rel_Specialization(conn, element)
+Rel_Access(fRect, rect)
+Rel_Access(fText, text)
+Rel_Access(fConn, conn)
+Rel_Access(fConn, rect, "lee centro origen/destino")
+Rel_Assignment(view, svg)
+@enduml
