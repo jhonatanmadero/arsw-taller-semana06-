@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARSW Collaborative Board</title><link rel="stylesheet" href="/css/app.css"></head>
+<body>
+<header><div><h1>ARSW Collaborative Board</h1><p>Lab #5 — Interactive Board</p></div><div id="remoteStatus" class="status">Idle</div></header>
+<section class="board-bar">
+  <input id="boardName" value="Architecture Board" aria-label="Board name">
+  <button id="newBoardBtn">New</button>
+  <input id="boardId" placeholder="boardId" aria-label="Board id">
+  <button id="loadBtn">Load</button><button id="saveBtn">Save</button><button id="retryBtn" hidden>Retry</button>
+</section>
+<section class="toolbar">
+  <button id="addRectBtn">+ Rectangle</button><button id="addTextBtn">+ Text</button><button id="connectBtn">Connect selected + next</button><button id="deleteBtn">Delete selected</button>
+</section>
+<div id="message" class="message" role="status"></div>
+<main><svg id="boardCanvas" viewBox="0 0 1000 600" tabindex="0" aria-label="Collaborative board canvas"></svg></main>
+<footer>Lab #5 keeps persistence on REST. WebSocket collaboration arrives in Lab #6.</footer>
+<script type="module" src="/js/app.js"></script>
+</body></html>
