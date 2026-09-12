@@ -1,0 +1,34 @@
+@startuml 03-remote-state-behavior
+!include <archimate/Archimate>
+title Comportamiento del estado remoto (ArchiMate) — Idle, Loading, Loaded, Error y Retry
+
+Application_Event(evAction, "Usuario solicita\nNew / Load / Save")
+Application_Event(evOk, "Respuesta 2xx")
+Application_Event(evFail, "Respuesta 4xx/5xx\no fallo de red")
+Application_Event(evRetry, "Usuario presiona Retry")
+Application_Event(evEdit, "Edición local\n(add / move / connect / delete)")
+
+Application_Process(idle, "Idle\nsin tablero / sin operación")
+Application_Process(loading, "Loading\npetición en vuelo\n(botones deshabilitados)")
+Application_Process(loaded, "Loaded\nestado local = servidor")
+Application_Process(error, "Error\nconserva lastAction y error\n(Retry visible)")
+
+Application_DataObject(remote, "RemoteState\nstatus, lastAction, error")
+Application_Component(app, "BoardApp.remote()")
+
+Rel_Triggering(idle, evAction)
+Rel_Triggering(loaded, evAction)
+Rel_Triggering(error, evAction)
+Rel_Triggering(evAction, loading)
+Rel_Triggering(error, evRetry)
+Rel_Triggering(evRetry, loading, "reintenta lastAction")
+Rel_Triggering(loading, evOk)
+Rel_Triggering(evOk, loaded)
+Rel_Triggering(loading, evFail)
+Rel_Triggering(evFail, error)
+Rel_Triggering(evEdit, loaded)
+Rel_Triggering(evEdit, error)
+Rel_Access(loading, remote)
+Rel_Access(error, remote)
+Rel_Assignment(app, loading)
+@enduml
